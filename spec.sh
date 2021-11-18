@@ -1,0 +1,1 @@
+./esbuild ./test-site/src/index.tsx --outdir="./test-site/dist" --bundle

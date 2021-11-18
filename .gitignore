@@ -21,4 +21,3 @@ node_modules/
 /.idea/
 /test-site/node_modules/
 /test-site/dist/
-spec.sh
