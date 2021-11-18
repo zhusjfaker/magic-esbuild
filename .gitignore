@@ -19,5 +19,6 @@ bin
 esbuild.exe
 node_modules/
 /.idea/
-/test-site/
+/test-site/node_modules/
+/test-site/dist/
 spec.sh
