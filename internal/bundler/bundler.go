@@ -4,9 +4,11 @@ import (
 	"bytes"
 	"encoding/base32"
 	"encoding/base64"
+	"encoding/json"
 	"fmt"
 	"math/rand"
 	"net/http"
+	"os"
 	"runtime/debug"
 	"sort"
 	"strings"
@@ -2337,4 +2339,28 @@ func (cache *runtimeCache) parseRuntime(options *config.Options) (source logger.
 		cache.astMap[key] = runtimeAST
 	}
 	return
+}
+
+func (bundle *Bundle) ChangeImport() {
+
+	var paths []string
+
+	for _, s := range bundle.files {
+		var filename = s.inputFile.Source.PrettyPath
+
+		paths = append(paths, filename)
+		if filename == "src/index.tsx" {
+			//var importAst = s.inputFile.Repr.ImportRecords()
+			var fileAst = s.inputFile.Repr.(*graph.JSRepr)
+			//var astJson1, _ = json.MarshalIndent(importAst, "", "  ")
+
+			var astJson2, _ = json.MarshalIndent(fileAst.AST.Parts[5].Stmts, "", "  ")
+			//os.Stdout.Write(astJson1)
+			os.Stdout.Write(astJson2)
+		}
+	}
+
+	//var txt, _ = json.MarshalIndent(paths, "", "    ")
+	//os.Stdout.Write(txt)
+
 }
