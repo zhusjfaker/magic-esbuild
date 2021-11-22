@@ -1,18 +1,20 @@
 import React from "react";
 import ReactDOM from "react-dom";
-import { Button } from "antd";
+import {Button, Input} from "antd";
 import Child from "./component/Child";
+import "antd/es/button/style/index.css";
 
 class Page extends React.Component {
-	render() {
-		return (
-			<div className={"test"}>
-				<div>Page</div>
-				<Child />
-				<Button>click me</Button>
-			</div>
-		);
-	}
+    render() {
+        return (
+            <div className={"test"}>
+                <div>Page</div>
+                <Child/>
+                <Button>click me</Button>
+                <Input/>
+            </div>
+        );
+    }
 }
 
-ReactDOM.render(<Page />, document.getElementById("root"));
+ReactDOM.render(<Page/>, document.getElementById("root"));

@@ -2349,18 +2349,58 @@ func (bundle *Bundle) ChangeImport() {
 		var filename = s.inputFile.Source.PrettyPath
 
 		paths = append(paths, filename)
-		if filename == "src/index.tsx" {
+		if strings.Contains(filename, "src/index.tsx") {
 			//var importAst = s.inputFile.Repr.ImportRecords()
 			var fileAst = s.inputFile.Repr.(*graph.JSRepr)
-			//var astJson1, _ = json.MarshalIndent(importAst, "", "  ")
-
-			var astJson2, _ = json.MarshalIndent(fileAst.AST.Parts[5].Stmts, "", "  ")
-			//os.Stdout.Write(astJson1)
-			os.Stdout.Write(astJson2)
+			var importAst = fileAst.AST.ImportRecords
+			fileAst.AST.ImportRecords = checklib(fileAst.AST.ImportRecords, fileAst)
+			var astJson1, _ = json.MarshalIndent(importAst, "", "  ")
+			//var astJson2, _ = json.MarshalIndent(fileAst.AST.Parts[5].Stmts, "", "  ")
+			os.Stdout.Write(astJson1)
+			//os.Stdout.Write(astJson2)
 		}
 	}
 
 	//var txt, _ = json.MarshalIndent(paths, "", "    ")
 	//os.Stdout.Write(txt)
+}
 
+func IsContain(items []uint32, item uint32) bool {
+	for _, eachItem := range items {
+		if eachItem == item {
+			return true
+		}
+	}
+	return false
+}
+
+func checklib(astlist []ast.ImportRecord, info *graph.JSRepr) []ast.ImportRecord {
+
+	var needchecindex []uint32
+	for importrecordsindex, node := range astlist {
+		if node.Path.Text == "antd" {
+			needchecindex = append(needchecindex, uint32(importrecordsindex))
+		}
+	}
+	var needcssalias []string
+	for _, namedimport := range info.AST.NamedImports {
+		if IsContain(needchecindex, namedimport.ImportRecordIndex) {
+			needcssalias = append(needcssalias, namedimport.Alias)
+		}
+	}
+
+	// 检测所有需要 加入对应 css 的 alias
+	var cssimports []string
+	if len(needcssalias) > 0 {
+		for _, component := range needcssalias {
+			lib := "/node_modules/antd/es/" + strings.ToLower(component) + "/style/index.css"
+			cssimports = append(cssimports, lib)
+
+			//newpath := logger.Path{Text: "@bytedesign/web-react/es/Select/style/index.css", IsAbsolute: false}
+			//newimport := ast.ImportRecord{}
+			//astlist = append(astlist, newimport)
+		}
+	}
+
+	return astlist
 }

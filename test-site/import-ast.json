@@ -1,0 +1,102 @@
+[
+  {
+    "Range": {
+      "Loc": {
+        "Start": 18
+      },
+      "Len": 7
+    },
+    "Path": {
+      "Text": "react",
+      "Namespace": "",
+      "IgnoredSuffix": "",
+      "Flags": 0
+    },
+    "Assertions": null,
+    "SourceIndex": {},
+    "IsUnused": false,
+    "ContainsImportStar": false,
+    "ContainsDefaultAlias": true,
+    "CallsRunTimeReExportFn": false,
+    "WrapWithToModule": false,
+    "CallRuntimeRequire": false,
+    "HandlesImportErrors": false,
+    "WasOriginallyBareImport": false,
+    "Kind": 1
+  },
+  {
+    "Range": {
+      "Loc": {
+        "Start": 48
+      },
+      "Len": 11
+    },
+    "Path": {
+      "Text": "react-dom",
+      "Namespace": "",
+      "IgnoredSuffix": "",
+      "Flags": 0
+    },
+    "Assertions": null,
+    "SourceIndex": {},
+    "IsUnused": false,
+    "ContainsImportStar": false,
+    "ContainsDefaultAlias": true,
+    "CallsRunTimeReExportFn": false,
+    "WrapWithToModule": false,
+    "CallRuntimeRequire": false,
+    "HandlesImportErrors": false,
+    "WasOriginallyBareImport": false,
+    "Kind": 1
+  },
+  {
+    "Range": {
+      "Loc": {
+        "Start": 84
+      },
+      "Len": 6
+    },
+    "Path": {
+      "Text": "antd",
+      "Namespace": "",
+      "IgnoredSuffix": "",
+      "Flags": 0
+    },
+    "Assertions": null,
+    "SourceIndex": {},
+    "IsUnused": false,
+    "ContainsImportStar": false,
+    "ContainsDefaultAlias": false,
+    "CallsRunTimeReExportFn": false,
+    "WrapWithToModule": false,
+    "CallRuntimeRequire": false,
+    "HandlesImportErrors": false,
+    "WasOriginallyBareImport": false,
+    "Kind": 1
+  },
+  {
+    "Range": {
+      "Loc": {
+        "Start": 110
+      },
+      "Len": 19
+    },
+    "Path": {
+      "Text": "./component/Child",
+      "Namespace": "",
+      "IgnoredSuffix": "",
+      "Flags": 0
+    },
+    "Assertions": null,
+    "SourceIndex": {},
+    "IsUnused": false,
+    "ContainsImportStar": false,
+    "ContainsDefaultAlias": true,
+    "CallsRunTimeReExportFn": false,
+    "WrapWithToModule": false,
+    "CallRuntimeRequire": false,
+    "HandlesImportErrors": false,
+    "WasOriginallyBareImport": false,
+    "Kind": 1
+  }
+]
