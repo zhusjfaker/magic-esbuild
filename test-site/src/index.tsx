@@ -2,7 +2,6 @@ import React from "react";
 import ReactDOM from "react-dom";
 import {Button, Input} from "antd";
 import Child from "./component/Child";
-import "antd/es/button/style/index.css";
 
 class Page extends React.Component {
     render() {
@@ -18,3 +17,6 @@ class Page extends React.Component {
 }
 
 ReactDOM.render(<Page/>, document.getElementById("root"));
+
+
+// import "antd/es/button/style/index.css";

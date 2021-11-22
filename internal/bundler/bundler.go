@@ -2350,14 +2350,12 @@ func (bundle *Bundle) ChangeImport() {
 
 		paths = append(paths, filename)
 		if strings.Contains(filename, "src/index.tsx") {
-			//var importAst = s.inputFile.Repr.ImportRecords()
 			var fileAst = s.inputFile.Repr.(*graph.JSRepr)
 			var importAst = fileAst.AST.ImportRecords
 			fileAst.AST.ImportRecords = checklib(fileAst.AST.ImportRecords, fileAst)
 			var astJson1, _ = json.MarshalIndent(importAst, "", "  ")
-			//var astJson2, _ = json.MarshalIndent(fileAst.AST.Parts[5].Stmts, "", "  ")
 			os.Stdout.Write(astJson1)
-			//os.Stdout.Write(astJson2)
+
 		}
 	}
 
@@ -2391,15 +2389,63 @@ func checklib(astlist []ast.ImportRecord, info *graph.JSRepr) []ast.ImportRecord
 
 	// 检测所有需要 加入对应 css 的 alias
 	var cssimports []string
+	parts := info.AST.Parts
+	symbols := info.AST.Symbols
+
 	if len(needcssalias) > 0 {
 		for _, component := range needcssalias {
-			lib := "/node_modules/antd/es/" + strings.ToLower(component) + "/style/index.css"
+			lib := "antd/es/" + strings.ToLower(component) + "/style/index.css"
 			cssimports = append(cssimports, lib)
 
-			//newpath := logger.Path{Text: "@bytedesign/web-react/es/Select/style/index.css", IsAbsolute: false}
-			//newimport := ast.ImportRecord{}
-			//astlist = append(astlist, newimport)
+			newpath := logger.Path{Text: lib, Namespace: "", IgnoredSuffix: "", Flags: 0}
+			newimport := ast.ImportRecord{
+				Range:                   logger.Range{},
+				Path:                    newpath,
+				Assertions:              nil,
+				IsUnused:                false,
+				ContainsImportStar:      false,
+				ContainsDefaultAlias:    false,
+				CallsRunTimeReExportFn:  false,
+				WrapWithToModule:        false,
+				CallRuntimeRequire:      false,
+				HandlesImportErrors:     false,
+				WasOriginallyBareImport: true,
+				Kind:                    1,
+			}
+			astlist = append(astlist, newimport)
+			new_import_index := uint32(len(astlist) + 1)
+
+			newstmt := js_ast.Stmt{
+				Loc: logger.Loc{},
+				Data: &js_ast.SImport{
+					ImportRecordIndex: new_import_index,
+					StarNameLoc:       nil,
+					Items:             nil,
+					DefaultName:       nil,
+					IsSingleLine:      false,
+				},
+			}
+			newpart := js_ast.Part{
+				ImportRecordIndices: []uint32{new_import_index},
+				Stmts:               []js_ast.Stmt{newstmt},
+			}
+			parts = append(parts, newpart)
+
+			newsymbols := js_ast.Symbol{
+				OriginalName:                     "require_src",
+				NamespaceAlias:                   nil,
+				UseCountEstimate:                 0,
+				MustNotBeRenamed:                 false,
+				MustStartWithCapitalLetterForJSX: false,
+				DidKeepName:                      false,
+				ImportItemStatus:                 0,
+				PrivateSymbolMustBeLowered:       false,
+				Kind:                             23,
+			}
+			symbols = append(symbols, newsymbols)
 		}
+		info.AST.Parts = parts
+		info.AST.Symbols = symbols
 	}
 
 	return astlist

@@ -1,0 +1,18 @@
+[
+  {
+    "Loc": {
+      "Start": 467
+    },
+    "Data": {
+      "NamespaceRef": {
+        "SourceIndex": 1,
+        "InnerIndex": 11
+      },
+      "DefaultName": null,
+      "Items": null,
+      "StarNameLoc": null,
+      "ImportRecordIndex": 4,
+      "IsSingleLine": false
+    }
+  }
+]
